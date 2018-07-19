@@ -50,8 +50,8 @@ $(document).ready(function () {
         console.log(historySV);
         newMsg.text(historySV.name + ": " + historySV.message);
         $("#msg-box").append(newMsg);
+        $("p")[$("p").length-1].scrollIntoView();
     });
-
 
     /*
   
