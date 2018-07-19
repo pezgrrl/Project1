@@ -50,7 +50,6 @@ $(document).ready(function () {
         console.log(historySV);
         newMsg.text(historySV.name + ": " + historySV.message);
         $("#msg-box").append(newMsg);
-        $("#msg-box").scrollTop("#msg-box").height();
         $("p")[$("p").length-1].scrollIntoView();
     });
 
