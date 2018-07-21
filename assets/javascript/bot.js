@@ -10,12 +10,12 @@ var bot = {
         var action = msg.substring(1);
         switch (action) {
             case "giphy":
-                //giphySearch(action.)
+                //giphy()
                 break;
-            case trivia:
+            case "trivia":
                 //trivia()
                 break;
-            case help:
+            case "help":
                 //help()
                 break;
             default:
@@ -26,6 +26,10 @@ var bot = {
     help: function() {
         //tell what bot can do
     }
+}
 
+function giphy(q, n) {
+    var APIKEY = ""
+    var url = "http://api.giphy.com/v1/gifs/search?q="+q+"&api_key="+APIKEY;
 
 }
