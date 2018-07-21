@@ -1,9 +1,12 @@
 body {
+  background-image:url("./../images/photo-1516575601760-608a49afc0d1.jpg");
+  background-repeat: no-repeat;
+  background-size: 1552px 786px;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #27ae60;
+  /* background: #27ae60; */
   font-family: "proxima-nova", "Source Sans Pro", sans-serif;
   font-size: 1em;
   letter-spacing: 0.1px;
@@ -13,9 +16,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-#msg-box {
-  padding-bottom: 10px;
-}
 #frame {
   width: 95%;
   min-width: 360px;
@@ -23,7 +23,8 @@ body {
   height: 92vh;
   min-height: 300px;
   max-height: 720px;
-  background: #E6EAEA;
+  background: rgba(230, 234, 234, 0.829);
+  /* background: rgba(246, 247, 248, 0.8); */
 }
 @media screen and (max-width: 360px) {
   #frame {
@@ -37,7 +38,8 @@ body {
   max-width: 340px;
   width: 40%;
   height: 100%;
-  background: #2c3e50;
+  background: #2c3e50ec;
+  /* background: rgba(54, 81, 109, 0.8); */
   color: #f5f5f5;
   overflow: hidden;
   position: relative;
@@ -57,7 +59,7 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 5px 0 0 0;
-    background: #32465a;
+    background: #2e455c;
   }
 }
 #frame #sidepanel #profile.expanded .wrap {
@@ -134,7 +136,7 @@ body {
   margin-top: 23px;
   font-size: 0.8em;
   cursor: pointer;
-  color: #435f7a;
+  color: #d7dce0;
 }
 @media screen and (max-width: 735px) {
   #frame #sidepanel #profile .wrap i.expand-button {
@@ -306,7 +308,7 @@ body {
 #frame #sidepanel #search input {
   font-family: "proxima-nova",  "Source Sans Pro", sans-serif;
   padding: 10px 0 10px 46px;
-  width: calc(100% - 25px);
+  width: calc(100% - 0px);
   border: none;
   background: #32465a;
   color: #f5f5f5;
