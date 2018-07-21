@@ -18,15 +18,16 @@
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
     <script src="assets/javascript/chat.js"></script>
     <script src="assets/javascript/moment.js"></script>
-    <div id="frame">
+    
 </head>
 
 <body>
+  <div id="frame"> 
     <div id="sidepanel">
         <div id="profile">
             <div class="wrap">
-                <!-- <img id="profile-img" src="assets/Images/Alex Bakilin.jpg" class="online" alt="" />
-                    <p>Alex Bakilin</p> -->
+                <img id="profile-img" src="img" class="online" alt="" />
+                    <p>name</p>
                 <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
                 <div id="status-options">
                     <ul>
@@ -71,8 +72,8 @@
             <input type="text" placeholder="Search contacts..." />
         </div>
         <div id="contacts">
-            <!-- <ul>
-                    <li class="contact">
+            <ul>
+                    <li class="contact active">
                         <div class="wrap">
                             <span class="contact-status online"></span>
                             <img src="img" alt="" />
@@ -82,17 +83,17 @@
                             </div>
                         </div>
                     </li>
-                    <li class="contact active">
-                        <div class="wrap">
+                    <li class="contact">
+                      <!-- <div class="wrap">
                             <span class="contact-status busy"></span>
                             <img src="img" alt="" />
                             <div class="meta">
                                 <p class="name">name</p>
                                 <p class="preview">text</p>
                             </div>
-                        </div>
+                        </div> -->
                     </li>
-                    <li class="contact">
+                    <!-- <li class="contact">
                         <div class="wrap">
                             <span class="contact-status away"></span>
                             <img src="img" alt="" />
@@ -121,8 +122,8 @@
                                 <p class="preview"><span>You:</span>text</p>
                             </div>
                         </div>
-                    </li>
-                </ul> -->
+                    </li> -->
+                </ul>
         </div>
         <div id="bottom-bar">
             <button id="addcontact">
@@ -137,8 +138,8 @@
     </div>
     <div class="content">
         <div class="contact-profile">
-            <!-- <img src="img" alt="" />
-                <p>name</p> -->
+            <img src="img" alt="" />
+                <p>name</p>
             <div class="social-media">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
                 <i class="fa fa-twitter" aria-hidden="true"></i>
@@ -146,7 +147,7 @@
             </div>
         </div>
         <div id="msg-box" class="messages">
-            <!-- <ul>
+            <ul>
                     <li class="sent">
                         <img src="img" alt="" />
                         <p>text</p>
@@ -154,7 +155,7 @@
                     <li class="replies">
                         <img src="img" alt="" />
                         <p>text</p>
-                </ul> -->
+                </ul>
         </div>
         <div class="message-input">
             <div class="wrap">
@@ -168,9 +169,9 @@
             </div>
         </div>
     </div>
-    </div>
-    <!-- <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='https://code.jquery.com/jquery-2.2.4.min.js'></script> -->
-    <!-- <script >
+  </div>
+    <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
+    <script>
     
     $("#profile-img").click(function() {
         $("#status-options").toggleClass("active");
@@ -227,7 +228,7 @@
       }
     });
     //# sourceURL=pen.js
-    </script> -->
+    </script>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
