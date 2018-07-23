@@ -66,9 +66,12 @@ $(document).ready(function () {
 
     database.ref("recent-history").orderByChild("timestamp").limitToLast(50).on("child_added", function (snapshot) {
         var historySV = snapshot.val();
-        var newMsg = $("<p>");
+        var newMsg = $("<li>");
+        var msgTxt = $("<p>");
+        newMsg.addClass("sent");
         console.log(historySV);
-        newMsg.text(historySV.name + ": " + historySV.message);
+        msgTxt.text(historySV.name + ": " + historySV.message);
+        newMsg.append(msgTxt);
         $("#msg-box").append(newMsg);
         $("p")[$("p").length - 1].scrollIntoView();
     });
