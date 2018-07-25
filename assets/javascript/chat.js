@@ -7,14 +7,22 @@ var config = {
     messagingSenderId: "357337575812"
 };
 firebase.initializeApp(config);
+var userList = [];
+var isDuplicate = false;
 $(document).ready(function () {
+
+
+
     // Initialize Firebase
     var database = firebase.database();
+    // If there is already a screenname in local storage, the browser will choose that one instead of anon -ps
     if (localStorage.getItem("sn")) {
         var sn = localStorage.getItem("sn");
-    } else {
+    } else {    //anon is the default for those who do not pick screennames -ps
         var sn = "anon";
     }
+
+    //overlay div for picking username initially -ps
     var overlay = $("<div>").css({
         position: "absolute",
         width: "100%",
@@ -27,25 +35,40 @@ $(document).ready(function () {
     var snForm = $("<form>");
     var snChoice = $("<input type='text' placeholder='Pick a screen name...' id='sn'>");
     snChoice.addClass("my-5 mx-auto d-block");
-    var snButton = $("<input type=submit class='sn'>").css("display", "none");
+    var snButton = $("<input type=submit id='snSubmit'>").css("display", "none");
     snForm.append(snChoice, snButton);
     overlay.append(snForm);
-    $("body").on("click", ".sn", function (event) {
+
+    //submit button for screenname, sets screenname in localstorage and pushes to database
+    $("body").on("click", "#snSubmit", function (event) {
         event.preventDefault();
         if ($("#sn").val()) {
             sn = $("#sn").val();
             localStorage.setItem("sn", sn);
         }
-        overlay.css("display", "none");
-        $("#msg").focus();
+        userList.forEach(function (e) {
+            isDuplicate = (localStorage.getItem("sn") === e);
+        });
+        if (isDuplicate) {
+
+        } else {
+            if (localStorage.getItem("sn")) {
+                database.ref("userlist/" + localStorage.getItem("sn")).push(localStorage.getItem("sn"));
+            }
+            overlay.css("display", "none");
+            $("#msg").focus();
+        }
+        //pushes sn in localstorage to userlist
     });
     $("body").append(overlay);
+
+
+    //pushes messages to database when send button clicked
     $("#send").on("click", function (event) {
         event.preventDefault();
         if ($("#msg").val()) {
             var msg = $("#msg").val();
             $("#msg").val("");
-            //TODO: set sn to each username (local storage?)
             database.ref("recent-history").push({
                 name: sn,
                 message: msg,
@@ -64,12 +87,31 @@ $(document).ready(function () {
         }
     });
 
+
+    //updates userList array when new child added to userlist database
+    database.ref("userlist").on("child_added", function (snapshot) {
+        var newUser = snapshot.val();
+        console.log("new user: " + newUser);
+        userList.push(newUser);
+        console.log(userList)
+        //TODO: add to html sidebar
+    });
+
+    //code to run when user closes screen (signs off)
+    window.onbeforeunload = function () {
+        var sn = localStorage.getItem("sn");
+        database.ref("userlist/" + sn).remove();
+
+    }
+
+
+    //updates chat window with most recent 50 messages and scrolls most recent into view
     database.ref("recent-history").orderByChild("timestamp").limitToLast(50).on("child_added", function (snapshot) {
         var historySV = snapshot.val();
         var newMsg = $("<li>");
         var msgTxt = $("<p>");
         newMsg.addClass("sent");
-        console.log(historySV);
+        //console.log(historySV);
         msgTxt.text(historySV.name + ": " + historySV.message);
         newMsg.append(msgTxt);
         $("#msg-box").append(newMsg);
