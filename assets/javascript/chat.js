@@ -28,7 +28,7 @@ $(document).ready(function () {
         width: "100%",
         height: "100%",
         "z-index": "999",
-        "background-color": ""#868e96e3"",
+        "background-color": "#868e96e3",
         opacity: "0.99",
         display: "block",
     });
@@ -50,10 +50,12 @@ $(document).ready(function () {
             isDuplicate = (localStorage.getItem("sn") === e);
         });
         if (isDuplicate) {
-
+            //does nothing right now if the sn is already being used by another person
         } else {
             if (localStorage.getItem("sn")) {
-                database.ref("userlist/" + localStorage.getItem("sn")).push(localStorage.getItem("sn"));
+                database.ref("userlist/" + localStorage.getItem("sn")).push({
+                    name: localStorage.getItem("sn"),
+                });
             }
             overlay.css("display", "none");
             $("#msg").focus();
@@ -90,10 +92,24 @@ $(document).ready(function () {
 
     //updates userList array when new child added to userlist database
     database.ref("userlist").on("child_added", function (snapshot) {
-        var newUser = snapshot.val();
-        console.log("new user: " + newUser);
+        var newUser = snapshot.key;
+        console.log(newUser);
         userList.push(newUser);
-        console.log(userList)
+        console.log(userList);
+        $("#contacts ul").append('\
+        <li class="contact active">\
+            <div class="wrap">\
+                <span class="contact-status online"></span>\
+                <img src="assets/images/img.png" alt="" />\
+                <div class="meta">\
+                    <p class="name">'+newUser+'</p>\
+                    <p class="preview"></p>\
+                </div>\
+            </div>\
+        </li>');
+
+
+
         //TODO: add to html sidebar
     });
 
@@ -101,7 +117,6 @@ $(document).ready(function () {
     window.onbeforeunload = function () {
         var sn = localStorage.getItem("sn");
         database.ref("userlist/" + sn).remove();
-
     }
 
 
