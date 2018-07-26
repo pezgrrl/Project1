@@ -598,7 +598,6 @@ body {
   float: right;
 } */
 #frame .content .messages ul li img {
-  width: 100px;
   border-radius: 5%;
   float: left;
 }
