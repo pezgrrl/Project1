@@ -20,7 +20,7 @@ $(document).ready(function () {
         width: "100%",
         height: "100%",
         "z-index": "999",
-        "background-color": ""#868e96e3"",
+        "background-color": "#868e96e3",
         opacity: "0.99",
         display: "block",
     });
