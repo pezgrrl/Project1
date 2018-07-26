@@ -91,6 +91,7 @@ $(document).ready(function () {
                 timestamp: firebase.database.ServerValue.TIMESTAMP,
             });
         }
+            window.bot.checkMsg(msg) 
     });
 
 
