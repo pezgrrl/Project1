@@ -46,11 +46,15 @@ $(document).ready(function () {
             sn = $("#sn").val();
             localStorage.setItem("sn", sn);
         }
-        userList.forEach(function (e) {
-            isDuplicate = (localStorage.getItem("sn") === e);
-        });
+        for (let i = 0; i < userList.length; i++) {
+            isDuplicate = (localStorage.getItem("sn") === userList[i]);
+            if(isDuplicate) {
+                return;
+            }
+        }
+        console.log(isDuplicate);
         if (isDuplicate) {
-            //does nothing right now if the sn is already being used by another person
+            localStorage.setItem("sn", "anon");
         } else {
             if (localStorage.getItem("sn")) {
                 database.ref("userlist/" + localStorage.getItem("sn")).push({
@@ -97,7 +101,7 @@ $(document).ready(function () {
         userList.push(newUser);
         console.log(userList);
         $("#contacts ul").append('\
-        <li class="contact active">\
+        <li class="contact active" id='+newUser+'>\
             <div class="wrap">\
                 <span class="contact-status online"></span>\
                 <img src="assets/images/img.png" alt="" />\
@@ -107,10 +111,14 @@ $(document).ready(function () {
                 </div>\
             </div>\
         </li>');
+    });
 
-
-
-        //TODO: add to html sidebar
+    database.ref("userlist").on("child_removed", function (snapshot) {
+        var signoffUser = snapshot.key;
+        console.log(signoffUser);
+        userList.splice(userList.indexOf(signoffUser),1);
+        console.log(userList);
+        $("#"+signoffUser).remove();
     });
 
     //code to run when user closes screen (signs off)
