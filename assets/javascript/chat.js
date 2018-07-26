@@ -7,14 +7,64 @@ var config = {
     messagingSenderId: "357337575812"
 };
 firebase.initializeApp(config);
+// Initialize Firebase
+var database = firebase.database();
 var userList = [];
 var isDuplicate = false;
+
+function giphySearch(query) {
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + query + "&api_key=tEEFTUSNf170mNTLFD9OkvQMltuPs8gS";
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response)
+        var imageUrl = response.data[4].images.fixed_width.url;
+        database.ref("giphy/").push(imageUrl);
+        // var randomDiv = $("<div>");
+        // var randomGiphy = $("<img>");
+        // randomGiphy.attr("src", imageUrl);
+        // randomGiphy.attr("alt", "random giphy");
+        // randomDiv.append(randomGiphy)
+        // console.log(randomDiv)
+        // $("#msg-box").append(randomDiv)
+        // console.log(randomGiphy);
+    });
+
+};
+
+
+var bot = {
+    username: "",
+    checkMsg: function (msg) {
+        if (msg.charAt(0) === "!") {
+            this.botAction(msg);
+        }
+    },
+
+    botAction: function (msg) {
+        var action = msg.substring(1);
+        switch (action.split(" ")[0]) {
+            case "giphy":
+                giphySearch(action.split(" ")[1]);
+                break;
+            case "trivia":
+                //trivia()
+                break;
+            case "help":
+                //help()
+                break;
+            default:
+                //help()
+                break;
+        }
+    },
+    help: function () {
+        //tell what bot can do
+    }
+}
 $(document).ready(function () {
 
-
-
-    // Initialize Firebase
-    var database = firebase.database();
     // If there is already a screenname in local storage, the browser will choose that one instead of anon -ps
     if (localStorage.getItem("sn")) {
         var sn = localStorage.getItem("sn");
@@ -48,7 +98,7 @@ $(document).ready(function () {
         }
         for (let i = 0; i < userList.length; i++) {
             isDuplicate = (localStorage.getItem("sn") === userList[i]);
-            if(isDuplicate) {
+            if (isDuplicate) {
                 return;
             }
         }
@@ -91,7 +141,7 @@ $(document).ready(function () {
                 timestamp: firebase.database.ServerValue.TIMESTAMP,
             });
         }
-            window.bot.checkMsg(msg) 
+        bot.checkMsg(msg)
     });
 
 
@@ -102,12 +152,12 @@ $(document).ready(function () {
         userList.push(newUser);
         console.log(userList);
         $("#contacts ul").append('\
-        <li class="contact active" id='+newUser+'>\
+        <li class="contact active" id='+ newUser + '>\
             <div class="wrap">\
                 <span class="contact-status online"></span>\
                 <img src="assets/images/img.png" alt="" />\
                 <div class="meta">\
-                    <p class="name">'+newUser+'</p>\
+                    <p class="name">'+ newUser + '</p>\
                     <p class="preview"></p>\
                 </div>\
             </div>\
@@ -117,9 +167,9 @@ $(document).ready(function () {
     database.ref("userlist").on("child_removed", function (snapshot) {
         var signoffUser = snapshot.key;
         console.log(signoffUser);
-        userList.splice(userList.indexOf(signoffUser),1);
+        userList.splice(userList.indexOf(signoffUser), 1);
         console.log(userList);
-        $("#"+signoffUser).remove();
+        $("#" + signoffUser).remove();
     });
 
     //code to run when user closes screen (signs off)
@@ -140,6 +190,19 @@ $(document).ready(function () {
         newMsg.append(msgTxt);
         $("#msg-box").append(newMsg);
         $("p")[$("p").length - 1].scrollIntoView();
+    });
+
+    database.ref("giphy/").on("child_added", function (snapshot) {
+        var giphyURL = snapshot.val();
+        var newMsg = $("<li>");
+        var msgTxt = $("<p>");
+        newMsg.addClass("sent");
+        //console.log(historySV);
+        msgTxt.html("<img src='" + giphyURL + "' alt='giphy-image'>");
+        newMsg.append(msgTxt);
+        $("#msg-box").append(newMsg);
+        $("p")[$("p").length - 1].scrollIntoView();
+        console.log(snapshot.val());
     });
 
 
